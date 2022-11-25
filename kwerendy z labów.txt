@@ -99,10 +99,53 @@ DELETE FROM postac WHERE rodzaj='wiking' ORDER BY wiek ASC limit 2;
    ALTER table postac MODIFY COLUMN enum('wiking','ptak','kobieta','syrena','waz');
   
     Insert into postac(nazwa,rodzaj,data_ur,wiek,pesel)  VALUES ('Waz Loco','waz','1800-11-18',120,'12334578901');
+    
+    
+    #1 opcja
+    
+    CREATE TABLE marynarz LIKE postac;
+    
+   #INSERT INTO marynarz SELECT...FROM postac;
+   
+    #2 opcja
+    
+    #CREATE TABLE marynarz SELECT * FROM postac WHERE...;
+    
+    
+    SELECT * from postac where czlonek_zalogi is not null;
+    
+    INSERT INTO marynarz SELECT * from postac where czlonek_zalogi is not null; 
   
   
+  alter table marynarz add foreign key(czlonek_zalogi) references statek(nazwa_statku);
+  
+  
+   update postac set czlonek_zalogi=null;
+ update marynarz set czlonek_zalogi=null;
+ 
+ DELETE from postac where nazwa=('floki');
+  DELETE from marynarz where nazwa=('floki');
 
 
 
+  ALTER TABLE marynarz drop CONSTrAINT marynarz_ibfk_1;
+  
+  drop table statek;
+  
+ 
+  insert into zwierz (nazwa,wiek) select nazwa,wiek from postac  where rodzaj in ('ptak','waz');
 
-
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                                    #LAB 5
+                                                                    
+CREATE table kreatura  SELECT * from wikingowie.kreatura;
+                                                                    
+                                                                    
+                                                                    
