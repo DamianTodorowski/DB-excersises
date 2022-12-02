@@ -132,20 +132,92 @@ DELETE FROM postac WHERE rodzaj='wiking' ORDER BY wiek ASC limit 2;
   
   drop table statek;
   
- 
+  
+  
+   CREATE TABLE zwierz (id_zwierza int auto_increment, nazwa varchar(80),wiek int, PRIMARY KEY(id_zwierza));
+
   insert into zwierz (nazwa,wiek) select nazwa,wiek from postac  where rodzaj in ('ptak','waz');
 
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
-                                                            
+                                                          
                                                                     #LAB 5
                                                                     
 CREATE table kreatura  SELECT * from wikingowie.kreatura;
-                                                                    
-                                                                    
-                                                                    
+CREATE table zasob SELECT * from wikingowie.zasob;    
+CREATE table ekwipunek SELECT * from wikingowie.ekwipunek;
+
+
+SELECT * from kreatura WHERE NOT rodzaj='wiedzma' AND udzwig > 50 or udzwig = 50;
+
+
+
+SELECT * from zasob WHERE waga >= 2 and waga <=5;
+SELECT * from kreatura WHERE waga between 2 and 5;
+
+
+
+
+
+SELECT * from kreatura WHERE nazwa like '%or%' AND UDZWIG BETWEEN 30 and 100;
+
+
+
+
+
+SELECT * from zasob  where month(dataPozyskania) = 7 OR month(dataPozyskania) = 8;
+
+
+
+select * from zasob ORDER BY waga ASC;
+
+
+SELECT * FROM kreatura ORDER BY dataUr DESC limit 5;
+                                     
+
+
+SELECT DISTINCT rodzaj from zasob;
+
+
+SELECT CONCAT("nazywam sie ",nazwa, " i mój wiek to ", wiek) from postac;
+
+SELECT CONCAT( nazwa,  rodzaj) from kreatura where rodzaj like 'wi%';
+
+
+SELECT * from zasob;
+
+SELECT nazwa,ilosc*waga AS waga_calkowita FROM zasob WHERE dataPozyskania >= '2000-01-01' AND dataPozyskania <= '2007-12-30';
+
+SELECT nazwa,ilosc*waga AS waga_calkowita FROM zasob WHERE year(dataPozyskania) between 2000 and 2007;
+
+SELECT nazwa,(ilosc*waga)*0.7 AS 'masa wlasciwa jedzenia', (ilosc*waga)*0.3 AS 'waga odpadkow' from zasob WHERE rodzaj='jedzenie';
+
+SELECT * from zasob where rodzaj is null;
+
+SELECT * from zasob;
+SELECT DISTINCT (rodzaj) from zasob WHERE  nazwa like 'Ba%' OR nazwa like '%os' ORDER BY rodzaj ASC;
+
+
+SELECT avg(waga) from kreatura where rodzaj='wiking';
+
+
+SELECT avg(waga), count(*) from kreatura group by rodzaj;
+
+
+
+SELECT avg(year(now())-year(dataUr)) from kreatura;
+
+SELECT sum(waga) from zasob group by rodzaj;
+
+SELECT avg(waga) from zasob group by nazwa having avg(waga)>=4 and sum(waga)>10; 
+
+SELECT rodzaj,count(distinct(nazwa)) from zadob GROUP BY rodzaj having
+
+SELECT ilosc FROM ekwipunek LEFT JOIN kreatura ON ilosc=nazwa;
+
+
+
+
+
+
+
+
+
