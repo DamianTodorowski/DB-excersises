@@ -163,7 +163,7 @@ SELECT * from kreatura WHERE nazwa like '%or%' AND UDZWIG BETWEEN 30 and 100;
 
 
 
-SELECT * from zasob  where month(dataPozyskania) = 7 OR month(dataPozyskania) = 8;
+SELECT * from zasob  where month(dataPozyskania) = 7 AND month(dataPozyskania) = 8;
 
 
 
@@ -195,15 +195,18 @@ SELECT * from zasob where rodzaj is null;
 SELECT * from zasob;
 SELECT DISTINCT (rodzaj) from zasob WHERE  nazwa like 'Ba%' OR nazwa like '%os' ORDER BY rodzaj ASC;
 
+. wyświetl średnią wagę wszystkich wikingów
 
 SELECT avg(waga) from kreatura where rodzaj='wiking';
 
+Wyświetl średnią wagę oraz liczbę kreatur dla każdego rodzaju 
 
 SELECT avg(waga), count(*) from kreatura group by rodzaj;
 
 
+wyświetl średni wiek dla każdego rodzaju kreatury
 
-SELECT avg(year(now())-year(dataUr)) from kreatura;
+SELECT avg(year(now())-year(dataUr)) from kreatura gropup by rodzaj;
 
 SELECT sum(waga) from zasob group by rodzaj;
 
