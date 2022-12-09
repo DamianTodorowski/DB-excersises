@@ -195,6 +195,13 @@ SELECT * from zasob where rodzaj is null;
 SELECT * from zasob;
 SELECT DISTINCT (rodzaj) from zasob WHERE  nazwa like 'Ba%' OR nazwa like '%os' ORDER BY rodzaj ASC;
 
+
+
+
+
+
+                                                                    #LAB6
+
 . wyświetl średnią wagę wszystkich wikingów
 
 SELECT avg(waga) from kreatura where rodzaj='wiking';
@@ -214,8 +221,60 @@ SELECT avg(waga) from zasob group by nazwa having avg(waga)>=4 and sum(waga)>10;
 
 SELECT rodzaj,count(distinct(nazwa)) from zadob GROUP BY rodzaj having
 
-SELECT ilosc FROM ekwipunek LEFT JOIN kreatura ON ilosc=nazwa;
 
+#3
+
+#złączanie wewn(czesc wspolna)
+
+1.metoda
+
+select * from ekwipunek as k , ekwpiunek e where k.idkreatury=e.idkreatury;  
+
+select * from kreatura k inner join ekwpiunek e on k.idkreatury=e.idkreatury;
+
+
+3.1
+
+SELECT nazwa,ilosc FROM  kreatura k INNER JOIN ekwipunek e ON k.idKreatury=e.ilosc;
+
+3.2
+
+SELECT kreatura.nazwa,zasob.nazwa FROM kreatura  
+ inner join ekwipunek   ON (kreatura.idKreatury=ekwipunek.idKreatury)
+ inner join zasob   ON (ekwipunek.idZasobu=zasob.idZasobu);
+ 
+ 
+ SELECT k.nazwa,z.nazwa FROM kreatura  k
+ inner join ekwipunek  e ON (k.idKreatury=e.idKreatury)
+ inner join zasob  z ON (e.idZasobu=z.idZasobu);
+ 
+ 
+ 
+ 
+ 3.3
+ 
+  SELECT * from kreatura k left join ekwipunek e on k.idkreatury=e.idkreatury is null;
+  
+  
+  
+  
+  
+  
+  4.1
+
+ SELECT k.nazwa, zasob.nazwa FROM kreatura k NATURAL JOIN ekwipunek e INNER JOIN zasob on e.idZasobu=zasob.idZasobu   
+ where year(dataUr) between 1670 and 1679 order by k.nazwa ;
+
+4.2
+
+
+
+ select kreatura.nazwa,zasob.nazwa FROM kreatura natural join ekwipunek inner join zasob on ekwipunek.idZasobu=zasob.idZasobu 
+ where zasob.rodzaj='jedzenie' limit 5;
+
+
+
+4.3
 
 
 
