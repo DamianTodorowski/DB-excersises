@@ -222,7 +222,7 @@ SELECT avg(waga) from zasob group by nazwa having avg(waga)>=4 and sum(waga)>10;
 SELECT rodzaj,count(distinct(nazwa)) from zadob GROUP BY rodzaj having
 
 
-#3
+                                                ZADANIE 3
 
 #złączanie wewn(czesc wspolna)
 
@@ -235,10 +235,13 @@ select * from kreatura k inner join ekwpiunek e on k.idkreatury=e.idkreatury;
 
 3.1
 
+. Wyświetlić dla każdej kreatury ilości zasobów jakie niesie.
+
 SELECT nazwa,ilosc FROM  kreatura k INNER JOIN ekwipunek e ON k.idKreatury=e.ilosc;
 
 3.2
-
+ Wyświetlić dla każdej kreatury nazwy zasobów jakie posiada.
+ 
 SELECT kreatura.nazwa,zasob.nazwa FROM kreatura  
  inner join ekwipunek   ON (kreatura.idKreatury=ekwipunek.idKreatury)
  inner join zasob   ON (ekwipunek.idZasobu=zasob.idZasobu);
@@ -253,21 +256,28 @@ SELECT kreatura.nazwa,zasob.nazwa FROM kreatura
  
  3.3
  
+ . Wyświetlić kreatury, które nie posiadają żadnego ekwipunku.
+
+ 
   SELECT * from kreatura k left join ekwipunek e on k.idkreatury=e.idkreatury is null;
   
   
-  
+                                          
+                                          ZADANIE 4
   
   
   
   4.1
+  
+  Wyświetlić nazwy wikingów, którzy urodzili się w latach 70-tych XVII wieku oraz nazwy 
+zasobów, które posiadają (użyj natural joina jeśli się da).
 
  SELECT k.nazwa, zasob.nazwa FROM kreatura k NATURAL JOIN ekwipunek e INNER JOIN zasob on e.idZasobu=zasob.idZasobu   
  where year(dataUr) between 1670 and 1679 order by k.nazwa ;
 
 4.2
 
-
+Wyświetlić nazwy 5 najmłodszych kreatur, które w ekwipunku posiadają jedzenie
 
  select kreatura.nazwa,zasob.nazwa FROM kreatura natural join ekwipunek inner join zasob on ekwipunek.idZasobu=zasob.idZasobu 
  where zasob.rodzaj='jedzenie' limit 5;
@@ -275,7 +285,8 @@ SELECT kreatura.nazwa,zasob.nazwa FROM kreatura
 
 
 4.3
-
+Wypisz obok siebie nazwy kreatur, których numer idKreatury różni się o 5 (np. Bjorn - Astrid, 
+Brutal - Ibra itd.).
 
 SELECT k1.nazwa,k2.nazwa FROM kreatura k1 INNER JOIN kreatura k2 on (k1.idKreatury+5=k2.idKreatury);
 
@@ -286,12 +297,21 @@ SELECT k1.nazwa,k2.nazwa FROM kreatura k1 INNER JOIN kreatura k2 on (k1.idKreatu
                                                       
 5.1
 
+Dla każdego rodzaju kreatury wyświetlić średnią wagę zasobów, jaką posiadają w ekwipunku, 
+jeśli kreatura nie jest małpą ani wężem i ilość ekwipunku jest poniżej 30.
+
+
 SELECT kreatura.rodzaj,avg(zasob.waga*ekwipunek.ilosc) AS srednia from kreatura INNER JOIN ekwipunek ON (kreatura.idKreatury=ekwipunek.idKreatury)
 INNER JOIN zasob ON (ekwipunek.idZasobu=zasob.idZasobu) WHERE kreatura.rodzaj!='malpa' OR kreatura.rodzaj!='waz' 
 GROUP by rodzaj having sum(ekwipunek.ilosc)<30;
 
 
 5.2
+
+Dla każdego rodzaju kreatury wyświetlić nazwę, datę urodzenia i rodzaj najmłodszej i 
+najstarszej kreatury
+
+
 SELECT kreatura.nazwa,kreatura.rodzaj,kreatura.dataUr FROM kreatura ,(SELECT min(dataUr) AS min,max(dataUr) AS max from kreatura group by rodzaj) e2 
 WHERE dataUr = min OR dataUr=max;
 
