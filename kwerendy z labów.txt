@@ -317,3 +317,46 @@ WHERE dataUr = min OR dataUr=max;
 
 
 
+////////////////// LAB 7 /////////////////////////
+
+                    ZADANIE 1
+
+1.1
+
+
+ Create table uczestnicy SELECT * from wikingowie.uczestnicy;
+ Create table etapy_wyprawy SELECT * from wikingowie.etapy_wyprawy;
+ Create table sektor SELECT * from wikingowie.sektor;c
+ Create table wyprawa select * from wikingowie.wyprawa;
+ 
+ 
+ 
+ 2.2
+ 
+ 
+  SELECT k.nazwa from kreatura as k left join uczestnicy as u on k.idKreatury=u.id_uczestnika where id_uczestnika is null;
+  
+  
+  
+  2.3
+  
+   select w.nazwa, sum(e.ilosc) from wyprawa as w inner join uczestnicy as u on (u.id_wyprawy=w.id_wyprawy) 
+ inner join ekwipunek as e on (u.id_uczestnika=e.idKreatury) group by w.nazwa; 
+
+
+
+
+
+
+                                  ZADANIE 3
+
+
+3.1
+
+select w.nazwa,count(u.id_uczestnika), group_concat(k.nazwa) from wyprawa as w 
+ inner join uczestnicy as u on (u.id_wyprawy=w.id_wyprawy) inner join kreatura as k on (k.idKreatury=u.id_uczestnika) group by w.id_wyprawy;
+
+
+
+
+
