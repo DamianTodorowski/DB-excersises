@@ -331,14 +331,14 @@ WHERE dataUr = min OR dataUr=max;
  
  
  
- 2.2
+ 1.2
  
  
   SELECT k.nazwa from kreatura as k left join uczestnicy as u on k.idKreatury=u.id_uczestnika where id_uczestnika is null;
   
   
   
-  2.3
+  1.3
   
    select w.nazwa, sum(e.ilosc) from wyprawa as w inner join uczestnicy as u on (u.id_wyprawy=w.id_wyprawy) 
  inner join ekwipunek as e on (u.id_uczestnika=e.idKreatury) group by w.nazwa; 
@@ -348,10 +348,10 @@ WHERE dataUr = min OR dataUr=max;
 
 
 
-                                  ZADANIE 3
+                                  ZADANIE 2
 
 
-3.1
+2.1
 
 select w.nazwa,count(u.id_uczestnika), group_concat(k.nazwa) from wyprawa as w 
  inner join uczestnicy as u on (u.id_wyprawy=w.id_wyprawy) inner join kreatura as k on (k.idKreatury=u.id_uczestnika) group by w.id_wyprawy;
@@ -359,4 +359,78 @@ select w.nazwa,count(u.id_uczestnika), group_concat(k.nazwa) from wyprawa as w
 
 
 
+
+
+                                                        ZADANIE 3
+             
+
+
+#przyklad select rodzaj from kreatura; 
+#select ifnull(rodzaj,"brak rodzaju") from kreatura
+#2 wersja
+select if(rodzaj is null,"brak rodzaju",rodzaj)from kreatura;
+
+
+
+
+
+3.1
+SELECT ifnull(count(etapy_wyprawy.sektor),0) AS ilosc_odwiedzin, sektor.nazwa FROM sektor LEFT JOIN etapy_wyprawy ON (etapy_wyprawy.sektor=sektor.id_sektora) GROUP BY sektor.id_sektora;
+
+
+
+
+
+3.2
+
+SELECT kreatura.nazwa, 
+IF(COUNT(uczestnicy.id_wyprawy)>0,"brał udział w wyprawie","nie brał udziału w wyprawie") AS czyBralUdzial
+FROM kreatura
+LEFT JOIN uczestnicy 
+ON kreatura.idKreatury = uczestnicy.id_uczestnika
+GROUP BY kreatura.idKreatury;
+
+
+
+
+                                  
+                                  
+                                  
+                                            ZADANIE 4
+              
+4.1
+
+Select wyprawa.nazwa, sum(length(etapy_wyprawy.dziennik)) as liczba_znakow from wyprawa inner join etapy_wyprawy on idEtapu=idwyprawy group by wyprawa.nazwa having sum(length(etapy_wyprawy.dziennik))<400;
+
+
+
+
+4.2
+
+
+
+SELECT wyprawa.nazwa, SUM(zasob.waga*ekwipunek.ilosc)/COUNT(DISTINCT(uczestnicy.id_uczestnika)) FROM uczestnicy INNER JOIN wyprawa ON (uczestnicy.id_wyprawy=wyprawa.id_wyprawy) INNER JOIN kreatura ON (kreatura.idKreatury=uczestnicy.id_uczestnika) INNER JOIN ekwipunek ON (ekwipunek.idKreatury=kreatura.idKreatury) INNER JOIN zasob ON (ekwipunek.idZasobu=zasob.idZasobu) GROUP BY uczestnicy.id_wyprawy ORDER BY wyprawa.id_wyprawy;
+
+
+
+
+
+
+                                                  ZADANIE 5
+                                                  
+ 5.1 
+
+SELECT k.nazwa,
+w.nazwa,
+DATEDIFF(w.data_rozpoczecia, k.dataUr) as 'Wiek w dniach'
+FROM kreatura k,
+etapy_wyprawy ew,
+wyprawa w,
+sektor s,
+uczestnicy u
+WHERE ew.sektor = s.id_sektora
+and k.idKreatury=u.id_uczestnika
+and u.id_wyprawy=w.id_wyprawy
+AND ew.idWyprawy = w.id_wyprawy
+AND s.nazwa = "Chatka dziadka";
 
